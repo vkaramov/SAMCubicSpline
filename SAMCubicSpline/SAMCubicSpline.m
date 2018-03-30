@@ -28,8 +28,8 @@
 		self.points = points;
 
 		if (points.count > 0) {
-			NSUInteger count = points.count;
-			NSUInteger n = count; // - 1;
+			const NSUInteger count = points.count;
+			const NSUInteger n = count - 1;
 			CGFloat x[count];
 			CGFloat a[count];
 			CGFloat h[count];
@@ -40,7 +40,7 @@
 			CGFloat k[count];
 			CGFloat s[count];
 
-			for (NSUInteger i = 0; i < points.count; i++) {
+			for (NSUInteger i = 0; i < count; i++) {
 				CGPoint point = SAMCGPointValue(points[i]);
 				x[i] = point.x;
 				a[i] = point.y;
@@ -69,9 +69,9 @@
 			l[n] = 1;
 			z[n] = 0;
 
-			NSMutableArray *b = [[NSMutableArray alloc] initWithCapacity:n];
-			NSMutableArray *c = [[NSMutableArray alloc] initWithCapacity:n];
-			NSMutableArray *d = [[NSMutableArray alloc] initWithCapacity:n];
+			NSMutableArray *b = [[NSMutableArray alloc] initWithCapacity:count];
+			NSMutableArray *c = [[NSMutableArray alloc] initWithCapacity:count];
+			NSMutableArray *d = [[NSMutableArray alloc] initWithCapacity:count];
 
 			for (NSUInteger i = 0; i <= n; i++) {
 				b[i] = @0;
@@ -119,7 +119,11 @@
 	}
 
 	CGFloat deltaX = input - (CGFloat)x[i];
-	return a[i] + [self.b[i] floatValue] * deltaX + [self.c[i] floatValue] * pow(deltaX, 2) + [self.d[i] floatValue] * pow(deltaX, 3);
+    float af = [self.b[i] floatValue];
+    float cf = [self.c[i] floatValue];
+    float df = [self.d[i] floatValue];
+
+	return a[i] + af * deltaX + cf * pow(deltaX, 2) + df * pow(deltaX, 3);
 }
 
 @end
